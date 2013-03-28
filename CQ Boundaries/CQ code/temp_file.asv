@@ -1,0 +1,9 @@
+first = min(green_pattern_uk(:,3))
+last = max(green_pattern_uk(:,3))
+
+for slice = first:last
+    seperate(green_pattern_uk,slice,slice)
+    %xlim([8,14])
+    view(0,90)
+    p
+end
