@@ -1,0 +1,48 @@
+%% Animate Slices
+% animates and plots transformed data
+
+dataSet = 'nickel_diecompressed';
+dataName = 'MB1';
+
+slices = 1:23;
+%% import data
+dataPath = ['Transformed Pts\' dataSet '\' dataName '.txt'];
+pts = dlmread(dataPath);
+
+%% show data slice by slice
+hold off
+for slice = slices
+    slicePts = pts(pts(:,3)==slice/10,:);
+    plot3(slicePts(:,1),slicePts(:,2),slicePts(:,3),'.','markersize',5)
+    title(['slice' int2str(slice)])
+    axis([0 20 0 20]); view(0,90); grid on;
+    xlabel('RD')
+    ylabel('TD')
+    zlabel('ND')
+    pause(1)
+    
+    % Capture Movie Frame
+    fig=figure(1);
+    %set(fig,'Position',scrsz);
+    speed = 5;
+    framestart = (frame-1)*speed+1;
+    frameend = frame*speed;
+    M(framestart:frameend)=getframe(fig);
+
+end
+
+%% write movie to file
+movie2avi(M,'microband_RD_angles.avi','compression','Cinepak','fps',5);
+
+
+
+%% plot 3d
+%{
+plot3(newpts(:,1),newpts(:,2),newpts(:,3),'.','markersize',1)
+
+axis([0 20 0 20])
+xlabel('RD')
+ylabel('TD')
+zlabel('ND')
+%view(0,90)
+%}
